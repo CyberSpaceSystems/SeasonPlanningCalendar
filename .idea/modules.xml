@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SeasonPlanningCalendar.iml" filepath="$PROJECT_DIR$/SeasonPlanningCalendar.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/databasecontrol/databasecontrol.iml" filepath="$PROJECT_DIR$/databasecontrol/databasecontrol.iml" />
+      <module fileurl="file://$PROJECT_DIR$/monthly/monthly.iml" filepath="$PROJECT_DIR$/monthly/monthly.iml" />
     </modules>
   </component>
 </project>
