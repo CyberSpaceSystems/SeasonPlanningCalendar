@@ -4,11 +4,17 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +39,8 @@ public class MonthlyFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private RecyclerView recList;
+    private static CharSequence mTitle = "Testing";
 
     /**
      * Use this factory method to create a new instance of
@@ -59,6 +67,7 @@ public class MonthlyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -72,7 +81,7 @@ public class MonthlyFragment extends Fragment {
 
         View monthlyView =  inflater.inflate(R.layout.fragment_monthly, container, false);
 
-        RecyclerView recList = (RecyclerView) monthlyView.findViewById(R.id.week_in_a_month_cardList);
+        recList = (RecyclerView) monthlyView.findViewById(R.id.week_in_a_month_cardList);
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -81,15 +90,39 @@ public class MonthlyFragment extends Fragment {
         recList.setAdapter(monthlyAdapter);
 
 
+        Toolbar toolbar = (Toolbar) monthlyView.findViewById(R.id.card_toolbar);
+        toolbar.setTitle("Testing");
+
+        if (toolbar != null) {
+            toolbar.inflateMenu(R.menu.card_toolbar);
+            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    int i = menuItem.getItemId();
+                    if (i == R.id.action_goal) {
+
+                        return true;
+                    }
+
+                    return false;
+
+
+                }
+            });
+
+        }
+
+
 
 
         return monthlyView;
     }
 
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction("hew ");
         }
     }
 
@@ -119,26 +152,10 @@ public class MonthlyFragment extends Fragment {
         List<MonthlyInfo> result = new ArrayList<MonthlyInfo>();
         for (int i=1; i <= size; i++) {
             MonthlyInfo ci = new MonthlyInfo();
-            if(i == 1){
-                ci.weekLabel = MonthlyInfo.WEEK_PREFIX + " ONE";
-            }             else if(i==2){
-                ci.weekLabel = MonthlyInfo.WEEK_PREFIX + " TWO";
-            }             else if(i==3){
-                ci.weekLabel = MonthlyInfo.WEEK_PREFIX + " THREE";
-            }             else if(i==4){
-                ci.weekLabel = MonthlyInfo.WEEK_PREFIX + " FOUR";
-            }
 
-
-            ci.mcycleLabel = MonthlyInfo.CYCLE_PREFIX;
-            ci.volumeLabel = MonthlyInfo.VOLUME_PREFIX;
-            ci.intensityLabel = MonthlyInfo.INTENSITY_PREFIX;
-            ci.totalsLabel = MonthlyInfo.TOTALS_PREFIX;
-            ci.totalsSessionsLabel = MonthlyInfo.TOTALSSESSIONS_PREFIX;
-            ci.totalsHoursLabel = MonthlyInfo.TOTALSHOURS_PREFIX;
-            ci.totalsKmsLabel = MonthlyInfo.TOTALSKMS_PREFIX;
-            ci.goalsLabel = MonthlyInfo.GOALS_PREFIX;
-            ci.commentLabel = MonthlyInfo.COMMENT_PREFIX;
+            ci.mcycle = MonthlyInfo.CYCLE_PREFIX;
+            ci.volume = MonthlyInfo.VOLUME_PREFIX;
+            ci.intensity = MonthlyInfo.INTENSITY_PREFIX;
 
             result.add(ci);
 
@@ -165,7 +182,7 @@ public class MonthlyFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        public void onFragmentInteraction(String uri);
     }
 
 }

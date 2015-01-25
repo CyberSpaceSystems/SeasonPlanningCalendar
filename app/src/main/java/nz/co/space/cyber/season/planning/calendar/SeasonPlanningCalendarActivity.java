@@ -1,6 +1,7 @@
 package nz.co.space.cyber.season.planning.calendar;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -18,9 +19,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import nz.co.systems.cyberspace.monthly.MonthlyFragment;
+
 
 public class SeasonPlanningCalendarActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+                   MonthlyFragment.OnFragmentInteractionListener        {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -51,9 +55,25 @@ public class SeasonPlanningCalendarActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+        switch (position) {
+            case 0:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container,  PlaceholderFragment.newInstance(position +1))
+                        .commit();
+                break;
+            case 1:
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, MonthlyFragment.newInstance("",""))
+                        .commit();
+                break;
+            case 2:
+                break;
+
+        }
+
+
+
     }
 
     public void onSectionAttached(int number) {
@@ -104,6 +124,12 @@ public class SeasonPlanningCalendarActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(String uri) {
+
+
     }
 
     /**
